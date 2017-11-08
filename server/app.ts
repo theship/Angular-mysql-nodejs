@@ -26,9 +26,27 @@ if (process.env.NODE_ENV === 'test') {
 mongoose.Promise = global.Promise;
 const mongodb = mongoose.connect(mongodbURI, { useMongoClient: true });
 
+const mysql      = require('mysql');
+const connection = mysql.createConnection({
+  host     : 'localhost',
+  user     : 'root',
+  password : '',
+  database : 'my_db'
+});
+
+
+connection.connect(function(error){
+  if(!!error) {
+    console.log('Error');
+  } else {
+    console.log('Connected');
+  }
+});
+
+
 mongodb
   .then((db) => {
-    console.log('Connected to MongoDB on', db.host + ':' + db.port);
+    console.log('Connected to MongoxDB onx ', db.host + ':' + db.port);
 
     setRoutes(app);
 
